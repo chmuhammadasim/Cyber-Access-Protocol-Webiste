@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Site self-test</title>
+</head>
+<body>
+  <pre id="result">PENDING</pre>
+  <iframe id="frame" src="../gallery.html" style="width:1440px;height:1000px"></iframe>
+  <pre id="result2">PENDING</pre>
+  <iframe id="frame2" src="../field-manual.html" style="width:1440px;height:1000px"></iframe>
+  <pre id="result3">PENDING</pre>
+  <iframe id="frame3" src="../index.html" style="width:1440px;height:1000px"></iframe>
+  <pre id="result4">PENDING</pre>
+  <iframe id="frame4" src="../campaign.html" style="width:1440px;height:1000px"></iframe>
+  <script>
+    var galleryResult = document.getElementById('result');
+    var manualResult = document.getElementById('result2');
+    var homeResult = document.getElementById('result3');
+    var errors = [];
+
+    function runGallery() {
+      try {
+        var frame = document.getElementById('frame');
+        var d = frame.contentDocument;
+        var w = frame.contentWindow;
+        w.addEventListener('error', function (event) {
+          errors.push('gallery: ' + event.message);
+        });
+
+        var total = d.querySelectorAll('.shot').length;
+        var initial = Array.prototype.filter.call(
+          d.querySelectorAll('.shot'), function (shot) { return !shot.hidden; }
+        ).length;
+
+        d.querySelector('.filter-btn[data-filter="bosses"]').click();
+        var bosses = Array.prototype.filter.call(
+          d.querySelectorAll('.shot'), function (shot) { return !shot.hidden; }
+        ).length;
+        var countText = d.querySelector('.gallery-count b').textContent;
+
+        d.querySelector('.shot:not([hidden])').click();
+        var dialogOpen = d.getElementById('lightbox').open;
+        var dialogTitle = d.querySelector('.lightbox__caption b').textContent;
+        var counter = d.querySelector('.lightbox__counter').textContent;
+
+        d.querySelector('#lightbox [data-next]').click();
+        var nextTitle = d.querySelector('.lightbox__caption b').textContent;
+        var nextCounter = d.querySelector('.lightbox__counter').textContent;
+
+        d.querySelector('#lightbox [data-close]').click();
+        var dialogClosed = !d.getElementById('lightbox').open;
+
+        d.querySelector('.filter-btn[data-filter="all"]').click();
+        var restored = Array.prototype.filter.call(
+          d.querySelectorAll('.shot'), function (shot) { return !shot.hidden; }
+        ).length;
+
+        galleryResult.textContent = JSON.stringify({
+          total: total,
+          initial: initial,
+          bosses: bosses,
+          countText: countText,
+          dialogOpen: dialogOpen,
+          dialogTitle: dialogTitle,
+          counter: counter,
+          nextTitle: nextTitle,
+          nextCounter: nextCounter,
+          dialogClosed: dialogClosed,
+          restored: restored,
+          errors: errors
+        });
+      } catch (error) {
+        galleryResult.textContent = 'ERROR ' + error.stack;
+      }
+    }
+
+    function runManual() {
+      try {
+        var frame = document.getElementById('frame2');
+        var d = frame.contentDocument;
+        var w = frame.contentWindow;
+        w.addEventListener('error', function (event) {
+          errors.push('manual: ' + event.message);
+        });
+
+        var initial = d.getElementById('panel-evidence').hidden === false &&
+          d.getElementById('panel-query').hidden === true;
+
+        d.getElementById('tab-query').click();
+        var selected = d.getElementById('tab-query').getAttribute('aria-selected');
+        var queryVisible = d.getElementById('panel-query').hidden === false;
+        var evidenceHidden = d.getElementById('panel-evidence').hidden === true;
+
+        d.getElementById('tab-knowledge').click();
+        var knowledgeVisible = d.getElementById('panel-knowledge').hidden === false;
+
+        manualResult.textContent = JSON.stringify({
+          initial: initial,
+          selected: selected,
+          queryVisible: queryVisible,
+          evidenceHidden: evidenceHidden,
+          knowledgeVisible: knowledgeVisible,
+          errors: errors
+        });
+      } catch (error) {
+        manualResult.textContent = 'ERROR ' + error.stack;
+      }
+    }
+
+    document.getElementById('frame').onload = runGallery;
+    document.getElementById('frame2').onload = runManual;
+
+    function runHome() {
+      try {
+        var frame = document.getElementById('frame3');
+        var d = frame.contentDocument;
+        var toggle = d.querySelector('.nav-toggle');
+        var nav = d.getElementById('site-nav');
+
+        toggle.click();
+        var opened = toggle.getAttribute('aria-expanded') === 'true' &&
+          nav.classList.contains('is-open');
+        toggle.click();
+        var closed = toggle.getAttribute('aria-expanded') === 'false' &&
+          !nav.classList.contains('is-open');
+
+        var ring = d.querySelector('[data-deck-ring]');
+        var before = ring ? (ring.style.getPropertyValue('--deck-rot') || '0deg') : null;
+        var next = d.querySelector('[data-deck-next]');
+        if (next) next.click();
+
+        var hero = d.querySelector('.hero');
+        var heroRect = hero ? hero.getBoundingClientRect() : null;
+        if (hero && heroRect) {
+          hero.dispatchEvent(new PointerEvent('pointermove', {
+            bubbles: true,
+            clientX: heroRect.left + heroRect.width * 0.8,
+            clientY: heroRect.top + heroRect.height * 0.3,
+            pointerType: 'mouse'
+          }));
+        }
+        var fine = frame.contentWindow.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+        setTimeout(function () {
+          var after = ring ? ring.style.getPropertyValue('--deck-rot') : null;
+          var faces = d.querySelectorAll('.deck-card').length;
+          homeResult.textContent = JSON.stringify({
+            navOpened: opened,
+            navClosed: closed,
+            deckCards: faces,
+            deckBefore: before,
+            deckAfter: after,
+            deckMoved: before !== after,
+            finePointer: fine,
+            heroParallax: hero ? hero.style.getPropertyValue('--hx') : null,
+            errors: errors
+          });
+        }, 900);
+      } catch (error) {
+        homeResult.textContent = 'ERROR ' + error.stack;
+      }
+    }
+
+    document.getElementById('frame3').onload = runHome;
+
+    function runCampaign() {
+      try {
+        var frame = document.getElementById('frame4');
+        var w = frame.contentWindow;
+        var d = frame.contentDocument;
+        var target = d.getElementById('chapter-5');
+        w.scrollTo({ top: target.offsetTop, left: 0, behavior: 'instant' });
+        var card = d.querySelector('.level-card');
+        if (card) {
+          var cardRect = card.getBoundingClientRect();
+          card.dispatchEvent(new PointerEvent('pointermove', {
+            bubbles: true,
+            clientX: cardRect.left + cardRect.width * 0.75,
+            clientY: cardRect.top + cardRect.height * 0.25,
+            pointerType: 'mouse'
+          }));
+        }
+        setTimeout(function () {
+          var active = d.querySelector('.chapter-nav a.is-active');
+          document.getElementById('result4').textContent = JSON.stringify({
+            scrollY: w.scrollY,
+            chapterTop: target.offsetTop,
+            active: active ? active.textContent.trim() : null,
+            tilt: card ? card.style.transform : null,
+            errors: errors
+          });
+        }, 700);
+      } catch (error) {
+        document.getElementById('result4').textContent = 'ERROR ' + error.stack;
+      }
+    }
+
+    document.getElementById('frame4').onload = runCampaign;
+  </script>
+</body>
+</html>

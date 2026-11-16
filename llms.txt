@@ -1,0 +1,33 @@
+# Cyber Access Protocol
+
+> A 2D cyber-security action platformer about a junior operator restoring a locked-down technology tower and uncovering the adversary attacking its records.
+
+Cyber Access Protocol is a single-player, offline game set in Asterion Tower. It spans
+50 levels and 40 missions across five chapters, from the tower lobby to the city core.
+The final chapter, The Last Signal, adds nine security disciplines, an Evidence
+Workbench, ten new bosses and three endings.
+
+## Main pages
+
+- [Overview](index.html): What Cyber Access Protocol is, the incident, design pillars and key facts.
+- [Campaign](campaign.html): All 50 levels across five chapters, with a screenshot for every level.
+- [Gameplay](gameplay.html): The core loop, abilities, mission structure, threats, bosses, controls and accessibility.
+- [Gallery](gallery.html): 64 screens from the game, filterable by campaign, bosses, interface and endings.
+- [Field Manual](field-manual.html): The Last Signal's nine disciplines, Evidence Workbench, ten bosses and three endings.
+- [The Journey](changelog.html): How the campaign grew chapter by chapter.
+- [Press Kit](press.html): Fact sheet, approved copy, cast, screenshots, logo and current status.
+
+## Key facts
+
+- 50 levels, 40 missions, five chapters.
+- Single-player and offline; no account, leaderboard or online requirement.
+- Windows PC; more platforms to be announced.
+- English and Urdu, with full right-to-left support.
+- Three endings chosen at the Level 50 command lock.
+- Fictional setting. The game never touches real systems, credentials or networks.
+
+## Contact
+
+Press and project contact: refer to the project repository.
+
+<!-- Relative links are used until a production domain is assigned. -->

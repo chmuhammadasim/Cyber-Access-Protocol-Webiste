@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Lightbox viewer</title>
+  <style>
+    html, body { margin: 0; padding: 0; overflow: hidden; background: #04070d; }
+    iframe { display: block; border: 0; width: 100vw; height: 100vh; }
+  </style>
+</head>
+<body>
+  <iframe id="frame" src="../gallery.html" title="Gallery lightbox check"></iframe>
+  <script>
+    var frame = document.getElementById('frame');
+    frame.onload = function () {
+      var shot = frame.contentDocument.querySelector('.shot:not([hidden])');
+      if (shot) shot.click();
+    };
+  </script>
+</body>
+</html>

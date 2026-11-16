@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Tilt view</title>
+  <style>
+    html, body { margin: 0; padding: 0; overflow: hidden; background: #04070d; }
+    iframe { display: block; border: 0; width: 100vw; height: 100vh; }
+  </style>
+</head>
+<body>
+  <iframe id="frame" src="../campaign.html" title="3D tilt check"></iframe>
+  <script>
+    var frame = document.getElementById('frame');
+    frame.onload = function () {
+      var doc = frame.contentDocument;
+      var card = doc.querySelector('.level-card');
+      if (!card) return;
+      var top = card.getBoundingClientRect().top + frame.contentWindow.scrollY - 180;
+      frame.contentWindow.scrollTo({ top: top, left: 0, behavior: 'instant' });
+      setTimeout(function () {
+        var rect = card.getBoundingClientRect();
+        card.dispatchEvent(new PointerEvent('pointermove', {
+          bubbles: true,
+          clientX: rect.left + rect.width * 0.82,
+          clientY: rect.top + rect.height * 0.22,
+          pointerType: 'mouse'
+        }));
+      }, 400);
+    };
+  </script>
+</body>
+</html>

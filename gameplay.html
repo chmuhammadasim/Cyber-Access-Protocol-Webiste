@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gameplay &amp; Controls — Cyber Access Protocol</title>
+  <meta name="description" content="How Cyber Access Protocol plays: the core loop, movement, abilities, mission structure, threats, bosses, scoring, controls and accessibility.">
+  <meta name="theme-color" content="#04070d">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta property="og:updated_time" content="2026-11-16">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Gameplay &amp; Controls — Cyber Access Protocol">
+  <meta property="og:description" content="Traverse. Investigate. Decide. Survive. The full gameplay reference.">
+  <meta property="og:image" content="assets/img/level-09.jpg">
+  <meta property="og:site_name" content="Cyber Access Protocol">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/site.css?v=5.0.4">
+  <link rel="stylesheet" href="assets/css/3d.css?v=1.2.1">
+  <script>document.documentElement.classList.add('js');if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('has-3d');</script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="brand" href="index.html" aria-label="Cyber Access Protocol — home">
+        <img class="brand__mark" src="assets/brand/logo_mark.svg" alt="" width="38" height="38">
+        <span class="brand__text">
+          <span class="brand__name">Cyber Access</span>
+          <span class="brand__name brand__name--accent">Protocol</span>
+          <span class="brand__sub">Asterion Tower // The Last Signal</span>
+        </span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Toggle navigation"><span></span></button>
+      <nav class="site-nav" id="site-nav" aria-label="Primary">
+        <a href="index.html">Overview</a>
+        <a href="campaign.html">Campaign</a>
+        <a href="gameplay.html" aria-current="page">Gameplay</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="field-manual.html">Field Manual</a>
+        <a href="changelog.html">Journey</a>
+        <a class="btn btn--ghost btn--small header-cta" href="press.html">Press Kit</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <section class="page-hero">
+      <div class="page-hero__bg">
+        <img src="assets/img/plate-43.webp" alt="" width="1280" height="720" fetchpriority="high">
+      </div>
+      <div class="container">
+        <div class="breadcrumb"><a href="index.html">Overview</a><span>/</span>Gameplay</div>
+        <div class="page-hero__content">
+          <div class="eyebrow">Operations manual // field reference</div>
+          <h1>Traverse. Investigate.<br>Decide. Survive.</h1>
+          <p class="lead">
+            Cyber Access Protocol is a platformer first. Movement, telegraphs and boss
+            patterns carry the tension; the security work is embedded in the rooms and in
+            the consequences of what you restore. This page covers the verbs, the threats,
+            the mission structure and the controls.
+          </p>
+          <div class="page-hero__meta">
+            <span class="chip">2D side-scrolling</span>
+            <span class="chip">Action-adventure</span>
+            <span class="chip">Educational puzzle</span>
+            <span class="chip chip--live">Single-player</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================== -->
+    <!-- Core loop                                                          -->
+    <!-- ================================================================== -->
+    <section class="section" aria-labelledby="loop-title">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <div class="eyebrow">The core loop</div>
+            <h2 id="loop-title">A room is a complete beat.</h2>
+            <p class="lead mt-2">
+              One room teaches or tests one idea. You read it, reach the device, make a
+              decision, and watch the building answer. One level holds several rooms and a
+              boss; the debrief closes the story beat.
+            </p>
+          </div>
+          <div class="section-head__aside">8 steps per level<br>5–15 minutes per room loop</div>
+        </div>
+
+        <div class="loop reveal">
+          <div class="loop__step"><h3>Briefing</h3><p>Receive a short objective and the threat context over the radio.</p></div>
+          <div class="loop__step"><h3>Traverse</h3><p>Move through platforms, hazards, patrols and locked doors.</p></div>
+          <div class="loop__step"><h3>Observe</h3><p>Scan for suspicious devices, weak points, logs and hidden routes.</p></div>
+          <div class="loop__step"><h3>Interact</h3><p>Reach consoles, physical controls, evidence and people.</p></div>
+          <div class="loop__step"><h3>Decide</h3><p>Configure a rule, correlate a log, preserve an artifact or choose a containment action.</p></div>
+          <div class="loop__step"><h3>Secure</h3><p>Apply the control and watch the room change: doors open, hazards clear, enemies weaken.</p></div>
+          <div class="loop__step"><h3>Confront</h3><p>Fight or outmaneuver the boss guarding the system.</p></div>
+          <div class="loop__step"><h3>Debrief</h3><p>Receive grade, score, explanation, evidence confidence and unlock information.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================== -->
+    <!-- Verbs                                                              -->
+    <!-- ================================================================== -->
+    <section class="section section--panel" aria-labelledby="verbs-title">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <div class="eyebrow eyebrow--amber">Player verbs</div>
+            <h2 id="verbs-title">Small toolset. Clear feedback.</h2>
+            <p class="lead mt-2">
+              Alex is not an all-powerful hacker. The kit is deliberately limited and every
+              action has a visible cooldown, a readable tell and an audible response.
+            </p>
+          </div>
+          <div class="section-head__aside">Keyboard · gamepad · touch</div>
+        </div>
+
+        <div class="grid cols-2">
+          <article class="ability reveal">
+            <div class="ability__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M12 2v5M12 17v5M2 12h5M17 12h5M5 5l3 3M16 16l3 3M19 5l-3 3M8 16l-3 3"/></svg>
+            </div>
+            <div>
+              <h3>Pulse Tool</h3>
+              <p>A short-range defensive pulse that disrupts hostile manifestations. It is not an exploit; it is a tool for making space.</p>
+            </div>
+            <span class="ability__key">J / X</span>
+          </article>
+
+          <article class="ability reveal">
+            <div class="ability__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="6"/><path d="M15.5 15.5L21 21"/><path d="M8 11h6M11 8v6"/></svg>
+            </div>
+            <div>
+              <h3>Scanner</h3>
+              <p>Highlights suspicious objects, enemy weak points, evidence and routes that the room does not advertise.</p>
+            </div>
+            <span class="ability__key">K / Y</span>
+          </article>
+
+          <article class="ability reveal">
+            <div class="ability__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 12h11M10 6l6 6-6 6"/><path d="M18 5v14"/></svg>
+            </div>
+            <div>
+              <h3>Dash</h3>
+              <p>A fast repositioning move with a short recovery. Use it to clear a telegraph or cross a collapsing lane.</p>
+            </div>
+            <span class="ability__key">Q / LT</span>
+          </article>
+
+          <article class="ability reveal">
+            <div class="ability__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="4" width="16" height="12" rx="1"/><path d="M8 20h8M12 16v4M8 8h8M8 11h4"/></svg>
+            </div>
+            <div>
+              <h3>Interact</h3>
+              <p>Reach consoles, switches, doors, evidence caches and NPCs. Interacting with a console is how a room's problem becomes a decision.</p>
+            </div>
+            <span class="ability__key">E / B</span>
+          </article>
+
+          <article class="ability reveal">
+            <div class="ability__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 20h16"/><path d="M7 20V9M12 20V5M17 20v-8"/><path d="M4 12l4-6 3 3 4-6 5 5"/></svg>
+            </div>
+            <div>
+              <h3>Movement set</h3>
+              <p>Run, variable-height jump, double jump, drop through one-way platforms, ladders and service lifts. Checkpoints restore health and hold your respawn.</p>
+            </div>
+            <span class="ability__key">A/D + Space</span>
+          </article>
+
+          <article class="ability reveal">
+            <div class="ability__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 6h16M4 12h10M4 18h13"/><path d="M17 15l3 3-3 3"/></svg>
+            </div>
+            <div>
+              <h3>Mission discipline</h3>
+              <p>Decisions unlock in order, and every answer comes with an explanation — including the wrong ones.</p>
+            </div>
+            <span class="ability__key">Every choice</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================== -->
+    <!-- Mission structure                                                  -->
+    <!-- ================================================================== -->
+    <section class="section" aria-labelledby="missions-title">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <div class="eyebrow">Mission structure</div>
+            <h2 id="missions-title">The campaign grows by depth, not by palette swaps.</h2>
+            <p class="lead mt-2">
+              Levels 1–10 teach through continuous rooms. From Level 11, each mission adds
+              an investigation, a defensive decision, a boss and a debrief that records what
+              the run proved.
+            </p>
+          </div>
+          <div class="section-head__aside"><a class="text-link" href="campaign.html">See all 50 levels</a></div>
+        </div>
+
+        <div class="table-wrap reveal">
+          <table class="data">
+            <thead>
+              <tr>
+                <th scope="col">Chapter</th>
+                <th scope="col">Levels</th>
+                <th scope="col">What each mission adds</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Chapter I // The Breach</td>
+                <td class="num">01–10</td>
+                <td>Continuous rooms, the tower's first bosses and the story of the breach</td>
+              </tr>
+              <tr>
+                <td>Chapter II // Dark Network</td>
+                <td class="num">11–20</td>
+                <td>Network investigations, a full mission debrief and three boss families</td>
+              </tr>
+              <tr>
+                <td>Chapter III // Identity Wars</td>
+                <td class="num">21–30</td>
+                <td>Identity decisions, access reviews and ten identity bosses</td>
+              </tr>
+              <tr>
+                <td>Chapter IV // Data Apocalypse</td>
+                <td class="num">31–40</td>
+                <td>Cloud and data operations, recovery decisions and ten data bosses</td>
+              </tr>
+              <tr>
+                <td>Chapter V // The Last Signal</td>
+                <td class="num">41–50</td>
+                <td>Nine security disciplines, the Evidence Workbench and three endings</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="grid cols-3 mt-4">
+          <div class="panel reveal">
+            <div class="card__kicker">Level Archive</div>
+            <h3 class="mb-2">Every record in one place</h3>
+            <p class="muted" style="font-size:.88rem;">All 50 levels and 40 missions, with campaign details for the first ten levels and practice and replay for every mission.</p>
+          </div>
+          <div class="panel reveal">
+            <div class="card__kicker">Practice mode</div>
+            <h3 class="mb-2">Drills without the platforming</h3>
+            <p class="muted" style="font-size:.88rem;">Console drills without enemies or platforming. Learn a mission's decisions before taking them into the field.</p>
+          </div>
+          <div class="panel reveal">
+            <div class="card__kicker">Custom replay</div>
+            <h3 class="mb-2">Change the rules, keep the record clean</h3>
+            <p class="muted" style="font-size:.88rem;">Choose your hints and retries, pick a scenario or attempt a single-attempt run. Replays never overwrite your main story.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================== -->
+    <!-- Threats                                                            -->
+    <!-- ================================================================== -->
+    <section class="section section--panel" aria-labelledby="threats-title">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <div class="eyebrow eyebrow--violet">Threat families</div>
+            <h2 id="threats-title">Malware has silhouettes, not identities.</h2>
+            <p class="lead mt-2">
+              Enemies are visual metaphors for defensive concepts, not literal malware.
+              Each family has a readable tell: an aura, a directional telegraph, a core that
+              glints before it commits.
+            </p>
+          </div>
+          <div class="section-head__aside">16 archetypes across four eras</div>
+        </div>
+
+        <div class="enemy-grid reveal">
+          <div class="enemy"><b>Virusling</b><span>The first thing that moves in the dark. Small, fast, fragile.</span></div>
+          <div class="enemy"><b>Wormlet</b><span>A low-profile crawler that gets under the floor line.</span></div>
+          <div class="enemy"><b>Trojan Mimic</b><span>An ordinary crate until it is close enough to matter.</span></div>
+          <div class="enemy"><b>Credential Skimmer</b><span>Lingers around access readers. Looks like hardware.</span></div>
+          <div class="enemy"><b>Packet Mite</b><span>A small packet with a short reach and a short fuse.</span></div>
+          <div class="enemy"><b>Data Leech</b><span>Attaches, drains and makes standing still expensive.</span></div>
+          <div class="enemy"><b>Impersonator Drone</b><span>Aerial harasser that borrows a familiar silhouette.</span></div>
+          <div class="enemy"><b>Crawler</b><span>The Dark Network's baseline ground unit.</span></div>
+          <div class="enemy"><b>Wisp</b><span>Drifts through lanes and forces a change of position.</span></div>
+          <div class="enemy"><b>Guard</b><span>Holds a doorway and makes you earn the angle.</span></div>
+          <div class="enemy"><b>Hound</b><span>Commits to a pursuit direction. Punishes hesitation.</span></div>
+          <div class="enemy"><b>Sentinel</b><span>Slower and heavier. A corridor becomes its weapon.</span></div>
+          <div class="enemy"><b>Badge</b><span>Identity-layer patrol unit with a scoped patrol route.</span></div>
+          <div class="enemy"><b>Echo</b><span>A duplicated pattern. Learn the repeat, then break it.</span></div>
+          <div class="enemy"><b>Bucket Mimic</b><span>Storage that should not be breathing.</span></div>
+          <div class="enemy"><b>Data Wraith</b><span>A late-campaign hunter that phases through the obvious answer.</span></div>
+        </div>
+        <p class="mono dim mt-2" style="font-size:.62rem;">Exact behaviour and spawn layouts vary by mission; the roster above spans the first four chapters.</p>
+      </div>
+    </section>
+
+    <!-- ================================================================== -->
+    <!-- Bosses                                                             -->
+    <!-- ================================================================== -->
+    <section class="section" aria-labelledby="bosses-title">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <div class="eyebrow eyebrow--amber">Boss encounters</div>
+            <h2 id="bosses-title">Every boss guards a system. Every phase changes the argument.</h2>
+            <p class="lead mt-2">
+              Mission bosses use the boss-grade controller: phase II at half health, speed
+              and cooldown escalation, a phase shift, a shockwave, a boss bar and proximity
+              reveal. A checkpoint sits before the fight.
+            </p>
+          </div>
+          <div class="section-head__aside">1 phase bar · 2 phases<br>Telegraph → commit → recover</div>
+        </div>
+
+        <div class="grid cols-2">
+          <article class="card reveal">
+            <div class="card__media"><img src="assets/img/boss-v2.jpg" alt="A Chapter II boss encounter in a teal network arena." width="1280" height="720" loading="lazy"></div>
+            <div class="card__body">
+              <div class="card__kicker">Chapter II // Three families</div>
+              <h3 class="card__title">Path Warden · Packet Hound · Null Sentinel</h3>
+              <p class="card__text">The Dark Network keeps three boss families by design. Distinct scenes, stats and authored spawn layouts; each family reads differently at phase II.</p>
+            </div>
+          </article>
+
+          <article class="card reveal">
+            <div class="card__media"><img src="assets/img/boss-v3.jpg" alt="A Chapter III identity boss encounter in a violet arena." width="1280" height="720" loading="lazy"></div>
+            <div class="card__body">
+              <div class="card__kicker">Chapter III // Ten identity archetypes</div>
+              <h3 class="card__title">From the Forgotten User to Proxy Heir</h3>
+              <p class="card__text">Each identity mission has its own full-body silhouette and a reason to guard the system: Forgotten User, Replication Wraith, Prompt Swarm, Claim Shifter, Vault Regent, Key Eater, Entitlement Judge, Session Stalker Prime, Context Engine, Proxy Heir.</p>
+            </div>
+          </article>
+
+          <article class="card reveal">
+            <div class="card__media"><img src="assets/img/boss-v4.jpg" alt="A Chapter IV data boss encounter in an ice-blue arena." width="1280" height="720" loading="lazy"></div>
+            <div class="card__body">
+              <div class="card__kicker">Chapter IV // Ten data archetypes</div>
+              <h3 class="card__title">The Image Golem, the CVE Broker, Data Sovereign</h3>
+              <p class="card__text">Cloud-era bosses have their own ice-blue silhouettes and data motifs: Control Plane, Open Vault, Key Eater, Image Golem, Build Doppelganger, Erasure Engine, CVE Broker, Dependency Swarm, Glass Auditor and Data Sovereign.</p>
+            </div>
+          </article>
+
+          <article class="card reveal" style="border-color:rgba(255,113,131,.45);">
+            <div class="card__media"><img src="assets/img/boss-50.jpg" alt="The Null Architect boss encounter in Level 50." width="1280" height="720" loading="lazy"></div>
+            <div class="card__body">
+              <div class="card__kicker" style="color:var(--red);">Chapter V // Ten new silhouettes</div>
+              <h3 class="card__title">Signal Collector → Null Architect</h3>
+              <p class="card__text">The Last Signal replaces the shared rig with ten bespoke bodies and archetype attack patterns: pulse, burst, dash, beam, mirror and cross. The finale is the Null Architect at the city core.</p>
+              <div class="card__foot"><a class="text-link" href="field-manual.html#bosses">Full boss roster</a></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================== -->
+    <!-- Debrief                                                            -->
+    <!-- ================================================================== -->
+    <section class="section section--panel" aria-labelledby="debrief-title">
+      <div class="container">
+        <div class="split">
+          <figure class="reveal">
+            <div class="panel" style="padding:0;overflow:hidden;">
+              <img src="assets/img/debrief-41.jpg" alt="The mission debrief for Level 41 showing grade, score, time, attempts, evidence and confidence." width="1280" height="720" loading="lazy">
+            </div>
+            <figcaption class="mono dim mt-2" style="font-size:.64rem;">MISSION DEBRIEF // LEVEL 41 // THREAT INTELLIGENCE</figcaption>
+          </figure>
+          <div class="reveal">
+            <div class="eyebrow">Debrief &amp; scoring</div>
+            <h2 id="debrief-title">The run is recorded honestly.</h2>
+            <div class="stack mt-3">
+              <p class="lead">
+                The debrief reveals the grade first, then the score board, then the actions.
+                There is no hidden multiplier and no fake precision: the panel reports what
+                the run actually did.
+              </p>
+              <p>
+                Each debrief records score, time, attempts, hints, decisions made,
+                optional objectives, evidence collected and an evidence-confidence rating.
+                Mastery badges call out a run with no hints and a first-try completion.
+              </p>
+            </div>
+            <div class="table-wrap mt-4">
+              <table class="data">
+                <tbody>
+                  <tr><td>Grade band</td><td>Based on decision quality, hints, attempts and optional evidence</td></tr>
+                  <tr><td>Score ceiling</td><td>Every chapter sets its own maximum score</td></tr>
+                  <tr><td>Mastery</td><td>No hints · first try · evidence complete · all optional</td></tr>
+                  <tr><td>Replays</td><td>Never overwrite your main story</td></tr>
+                  <tr><td>Endings</td><td>Level 50 saves the ending you chose</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================== -->
+    <!-- Controls                                                           -->
+    <!-- ================================================================== -->
+    <section class="section" aria-labelledby="controls-title">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <div class="eyebrow">Controls</div>
+            <h2 id="controls-title">Keyboard, gamepad, touch.</h2>
+            <p class="lead mt-2">
+              Every binding can be remapped in Settings. The game shows device-specific
+              prompts and rejects conflicting bindings rather than silently breaking a key.
+            </p>
+          </div>
+          <div class="section-head__aside">Full remap support<br>Gamepad focus throughout</div>
+        </div>
+
+        <div class="controls-grid reveal">
+          <div class="panel panel--flat">
+            <div class="card__kicker mb-2">Keyboard</div>
+            <div class="control-row"><span>Move</span><span class="keys"><kbd>A</kbd><kbd>D</kbd><span class="dim">or</span><kbd>←</kbd><kbd>→</kbd></span></div>
+            <div class="control-row"><span>Jump</span><span class="keys"><kbd>Space</kbd></span></div>
+            <div class="control-row"><span>Pulse attack</span><span class="keys"><kbd>J</kbd></span></div>
+            <div class="control-row"><span>Scan</span><span class="keys"><kbd>K</kbd></span></div>
+            <div class="control-row"><span>Interact / use console</span><span class="keys"><kbd>E</kbd></span></div>
+            <div class="control-row"><span>Dash</span><span class="keys"><kbd>Q</kbd></span></div>
+            <div class="control-row"><span>Drop through platform</span><span class="keys"><kbd>C</kbd></span></div>
+            <div class="control-row"><span>Pause</span><span class="keys"><kbd>Esc</kbd></span></div>
+            <div class="control-row"><span>Objectives</span><span class="keys"><kbd>Tab</kbd></span></div>
+            <div class="control-row"><span>Inventory</span><span class="keys"><kbd>I</kbd></span></div>
+          </div>
+
+          <div class="panel panel--flat">
+            <div class="card__kicker mb-2">Gamepad</div>
+            <div class="control-row"><span>Move</span><span class="keys"><kbd>Left stick</kbd></span></div>
+            <div class="control-row"><span>Jump</span><span class="keys"><kbd>A</kbd></span></div>
+            <div class="control-row"><span>Pulse attack</span><span class="keys"><kbd>X</kbd></span></div>
+            <div class="control-row"><span>Scan</span><span class="keys"><kbd>Y</kbd></span></div>
+            <div class="control-row"><span>Interact / use console</span><span class="keys"><kbd>B</kbd></span></div>
+            <div class="control-row"><span>Dash</span><span class="keys"><kbd>Left trigger</kbd></span></div>
+            <div class="control-row"><span>Drop through platform</span><span class="keys"><kbd>D-pad down</kbd></span></div>
+            <div class="control-row"><span>Pause</span><span class="keys"><kbd>Start</kbd></span></div>
+            <div class="control-row"><span>Objectives</span><span class="keys"><kbd>LB</kbd></span></div>
+            <div class="control-row"><span>Inventory</span><span class="keys"><kbd>RB</kbd></span></div>
+          </div>
+        </div>
+
+        <div class="panel panel--accent mt-4 reveal">
+          <div class="split" style="align-items:center;">
+            <div>
+              <div class="eyebrow">Touch overlay</div>
+              <h3 class="mb-2">Designed for landscape, not squeezed from desktop.</h3>
+              <p class="muted" style="font-size:.9rem;">
+                On mobile — or when enabled in Settings on desktop — a virtual joystick and
+                six multi-touch buttons (Jump, Pulse, Scan, Use, Dash, Pause) replace the
+                keyboard hints. The objective card moves above the joystick, prompts read
+                <span class="mono cyan">[TAP]</span>, and the overlay can be resized and made
+                semi-transparent.
+              </p>
+            </div>
+            <a class="btn btn--ghost" href="gallery.html#interface">See interface screens</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================== -->
+    <!-- Accessibility + not                                                -->
+    <!-- ================================================================== -->
+    <section class="section section--panel" aria-labelledby="a11y-title">
+      <div class="container">
+        <div class="split" style="align-items:start;">
+          <div class="reveal">
+            <div class="eyebrow eyebrow--violet">Accessibility</div>
+            <h2 id="a11y-title">Options that change the game, not the difficulty.</h2>
+            <p class="lead mt-2 mb-4">
+              The game is built for widescreen and laptop displays, larger text, high
+              contrast, three colorblind modes, reduced motion and right-to-left reading.
+            </p>
+            <ul class="a11y-list">
+              <li>Full keyboard and gamepad remapping</li>
+              <li>Device-specific input prompts</li>
+              <li>High-contrast mode</li>
+              <li>Deuteranopia, protanopia and tritanopia modes</li>
+              <li>115% text scaling with reflowed settings</li>
+              <li>Reduced Motion (camera parks on the player)</li>
+              <li>Touch overlay size and opacity controls</li>
+              <li>Right-to-left Urdu localization</li>
+              <li>Gamepad focus order and visible focus</li>
+              <li>Numeric health option in the design targets</li>
+            </ul>
+          </div>
+          <div class="reveal">
+            <div class="panel" style="padding:0;overflow:hidden;">
+              <img src="assets/img/settings.jpg" alt="The settings screen with larger text and tabs for Display, Audio, Controls, Access, Language and Touch." width="1280" height="720" loading="lazy">
+            </div>
+            <figcaption class="mono dim mt-2" style="font-size:.64rem;">SETTINGS // 115% TEXT // ALL CONTROLS REACHABLE WITHOUT SCROLL</figcaption>
+
+            <div class="panel panel--amber mt-4">
+              <div class="eyebrow eyebrow--amber">What it is not</div>
+              <ul class="not-list">
+                <li>Not a real security tool. It never scans a network, runs malware, exploits a system or asks for real credentials.</li>
+                <li>Not an online service. No account, leaderboard, live feed or cloud dependency.</li>
+                <li>Not a quiz app with platforming between questions. Consoles must be reached and their choices change the room.</li>
+                <li>Not unfair. No unavoidable damage, pixel-perfect jumps without teaching, or random hazards you cannot anticipate.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--panel" id="faq" aria-labelledby="faq-title">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <div class="eyebrow">Common questions</div>
+            <h2 id="faq-title">How it plays, answered.</h2>
+          </div>
+          <div class="section-head__aside">Spoiler-light<br>Quick answers</div>
+        </div>
+        <div class="grid cols-2">
+          <div class="panel reveal">
+            <h3 class="mb-2">Is it a platformer or a puzzle game?</h3>
+            <p>Both. Movement, hazards and bosses carry the action; the security decisions are puzzles embedded in the rooms.</p>
+          </div>
+          <div class="panel reveal">
+            <h3 class="mb-2">Is it multiplayer?</h3>
+            <p>No. Cyber Access Protocol is a single-player, offline game. There is no account, leaderboard or online requirement.</p>
+          </div>
+          <div class="panel reveal">
+            <h3 class="mb-2">Can I use a controller or play on a phone?</h3>
+            <p>Yes. Keyboard, controller and touch controls are supported, and the touch overlay can be enabled on desktop too.</p>
+          </div>
+          <div class="panel reveal">
+            <h3 class="mb-2">Is it a real hacking game?</h3>
+            <p>No. It is a fictional game about defense and recovery. It never scans a network, runs malware or asks for real credentials.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--tight">
+      <div class="container">
+        <div class="cta-band reveal">
+          <div class="cta-band__inner">
+            <div class="eyebrow">Next section</div>
+            <h2>Now meet the adversary.</h2>
+            <p class="lead">The Last Signal field manual covers the nine security disciplines, the Evidence Workbench, the ten bosses and all three endings.</p>
+            <div class="btn-row">
+              <a class="btn btn--primary" href="field-manual.html">Open the field manual</a>
+              <a class="btn btn--ghost" href="gallery.html">Browse the gallery</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="brand" href="index.html" aria-label="Cyber Access Protocol — home">
+            <img class="brand__mark" src="assets/brand/logo_mark.svg" alt="" width="38" height="38">
+            <span class="brand__text">
+              <span class="brand__name">Cyber Access</span>
+              <span class="brand__name brand__name--accent">Protocol</span>
+            </span>
+          </a>
+          <p>
+            A 2D cyber-security action platformer about defense, evidence and recovery.
+            Set in Asterion Tower. Fight through the incident, restore the systems and uncover the Null Architect.
+          </p>
+          <div class="hero__meta">
+            <span class="chip chip--live">Campaign complete</span>
+            <span class="chip">MIT licensed</span>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h3>Campaign</h3>
+          <ul>
+            <li><a href="campaign.html#chapter-1">I // The Breach</a></li>
+            <li><a href="campaign.html#chapter-2">II // Dark Network</a></li>
+            <li><a href="campaign.html#chapter-3">III // Identity Wars</a></li>
+            <li><a href="campaign.html#chapter-4">IV // Data Apocalypse</a></li>
+            <li><a href="campaign.html#chapter-5">V // The Last Signal</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Game</h3>
+          <ul>
+            <li><a href="gameplay.html">Gameplay &amp; controls</a></li>
+            <li><a href="field-manual.html">Field manual</a></li>
+            <li><a href="gallery.html">Screenshot gallery</a></li>
+            <li><a href="changelog.html">The journey</a></li>
+            <li><a href="press.html">Press kit</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>At a glance</h3>
+          <p>
+            Windows PC<br>
+            Single-player<br>
+            Offline<br>
+            English + Urdu<br>
+            Complete campaign
+          </p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 Cyber Access Protocol // MIT licensed</span>
+        <span class="status">LINK STABLE // OFFLINE-FIRST</span>
+        <span>Screens from the game // Updated 16 November 2026</span>
+      </div>
+    </div>
+  </footer>
+
+  <button class="back-top" type="button" aria-label="Back to top">↑</button>
+  <script src="assets/js/site.js?v=6.0.2" defer></script>
+</body>
+</html>

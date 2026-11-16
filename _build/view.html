@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Section viewer</title>
+  <style>
+    html, body { margin: 0; padding: 0; overflow: hidden; background: #04070d; }
+    iframe { display: block; border: 0; width: 100vw; height: 100vh; }
+  </style>
+</head>
+<body>
+  <iframe id="frame" title="Site section"></iframe>
+  <script>
+    var params = new URLSearchParams(location.hash.replace(/^#/, ''));
+    var frame = document.getElementById('frame');
+    frame.onload = function () {
+      var y = parseInt(params.get('y') || '0', 10);
+      var el = params.get('el');
+      try {
+        if (el) {
+          var target = frame.contentDocument.getElementById(el);
+          if (target) {
+            var top = target.getBoundingClientRect().top + frame.contentWindow.scrollY;
+            y = Math.max(0, top - 92);
+          }
+        }
+        frame.contentWindow.scrollTo({ top: y, left: 0, behavior: 'instant' });
+      } catch (error) {
+        document.title = 'SCROLL ERROR: ' + error.message;
+      }
+    };
+    frame.src = params.get('src') || '../index.html';
+  </script>
+</body>
+</html>
