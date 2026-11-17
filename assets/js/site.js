@@ -90,19 +90,25 @@
     var chapters = chapterLinks.map(function (link) {
       return document.querySelector(link.getAttribute('href'));
     }).filter(Boolean);
+    var navLockUntil = 0;
 
-    var syncChapters = function () {
-      var marker = window.scrollY + 180;
-      var active = chapters[0];
-      chapters.forEach(function (section) {
-        if (section.offsetTop <= marker) active = section;
-      });
+    var setActive = function (active) {
       chapterLinks.forEach(function (link) {
         link.classList.toggle(
           'is-active',
           active && link.getAttribute('href') === '#' + active.id
         );
       });
+    };
+
+    var syncChapters = function () {
+      if (Date.now() < navLockUntil) return;
+      var marker = 220;
+      var active = null;
+      chapters.forEach(function (section) {
+        if (section.getBoundingClientRect().top <= marker) active = section;
+      });
+      setActive(active || chapters[0]);
     };
     var ticking = false;
     window.addEventListener('scroll', function () {
@@ -113,6 +119,32 @@
         ticking = false;
       });
     }, { passive: true });
+
+    chapterLinks.forEach(function (link) {
+      link.addEventListener('click', function (event) {
+        var target = document.querySelector(link.getAttribute('href'));
+        if (!target) return;
+        event.preventDefault();
+        navLockUntil = Date.now() + 2600;
+        var navHeight = chapterNav.getBoundingClientRect().height;
+        var top = target.getBoundingClientRect().top + window.scrollY
+          - navHeight - parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop || '0') - 8;
+        window.scrollTo({
+          top: Math.max(0, top),
+          behavior: reduceMotion ? 'auto' : 'smooth'
+        });
+        setActive(target);
+        try {
+          if (history.replaceState) {
+            history.replaceState(null, '', link.getAttribute('href'));
+          }
+        } catch (error) {
+          /* file:// origins reject replaceState; the scroll still works. */
+        }
+        if (target.tabIndex < 0) target.setAttribute('tabindex', '-1');
+        target.focus({ preventScroll: true });
+      });
+    });
     syncChapters();
   }
 
@@ -145,6 +177,25 @@
       });
     });
   });
+
+  /* --- 3D system core --------------------------------------------------- */
+  var coreStage = document.querySelector('.core-stage');
+  var coreToggle = document.querySelector('.core-toggle');
+  if (coreStage && coreToggle) {
+    coreToggle.addEventListener('click', function () {
+      var held = coreStage.classList.toggle('is-held');
+      coreToggle.setAttribute('aria-pressed', String(held));
+      coreToggle.textContent = held ? 'Resume orbit' : 'Hold orbit';
+    });
+  }
+  if (coreStage && 'IntersectionObserver' in window) {
+    var coreObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        coreStage.classList.toggle('is-paused', !entry.isIntersecting);
+      });
+    }, { threshold: 0.15 });
+    coreObserver.observe(coreStage);
+  }
 
   /* --- Gallery filters --------------------------------------------------- */
   var filterBar = document.querySelector('.filter-bar');
@@ -315,7 +366,7 @@
   /* Tilt-and-glare cards */
   if (motionOkay && finePointer) {
     var tiltTargets = document.querySelectorAll(
-      '.feature, .level-card, .domain, .boss, .shot, .ending, .copy-block, .card'
+      '.feature, .level-card, .domain, .boss, .shot, .ending, .copy-block, .card, .system-card, .person, .download'
     );
     Array.prototype.forEach.call(tiltTargets, function (el) {
       if (el.closest('[data-deck]')) return;
@@ -352,12 +403,20 @@
     });
   }
 
-  /* 3D chapter deck */
+  /* --- Gallery count ----------------------------------------------------- */
+  /* The HTML ships a readable count; the DOM is the source of truth once the
+     gallery is filtered or the page is extended with new chapters. */
+  if (galleryCount && shots.length) {
+    galleryCount.textContent = String(shots.length).padStart(2, '0');
+  }
+
+  /* --- 3D chapter deck --------------------------------------------------- */
   var deck = document.querySelector('[data-deck]');
   if (deck) {
     var ring = deck.querySelector('[data-deck-ring]');
     var deckCards = Array.prototype.slice.call(ring.querySelectorAll('.deck-card'));
     var deckButtons = deck.querySelectorAll('.deck-btn');
+    var step = deckCards.length ? 360 / deckCards.length : 60;
     var rotation = 0;
     var target = 0;
     var deckPaused = false;
@@ -368,16 +427,20 @@
     var dragMoved = 0;
     var lastTime = 0;
 
+    ring.style.setProperty('--deck-step', step.toFixed(3) + 'deg');
+    deck.style.setProperty('--deck-radius', (step <= 45 ? 345 : 300) + 'px');
+    deck.style.setProperty('--deck-radius-sm', (step <= 45 ? 310 : 270) + 'px');
+
     var normalize = function (angle) {
       return ((angle + 180) % 360 + 360) % 360 - 180;
     };
     var paintDeck = function () {
       ring.style.setProperty('--deck-rot', rotation.toFixed(2) + 'deg');
       deckCards.forEach(function (card, index) {
-        var angle = Math.abs(normalize(index * 60 + rotation));
+        var angle = Math.abs(normalize(index * step + rotation));
         var opacity = 1 - Math.min(angle / 120, 0.7);
         card.style.setProperty('--card-opacity', opacity.toFixed(2));
-        card.style.pointerEvents = angle > 118 ? 'none' : '';
+        card.style.pointerEvents = angle > step * 1.95 ? 'none' : '';
       });
     };
     var tickDeck = function (time) {
@@ -413,14 +476,14 @@
 
     Array.prototype.forEach.call(deckButtons, function (button) {
       button.addEventListener('click', function () {
-        var step = button.hasAttribute('data-deck-next') ? 60 : -60;
-        target = Math.round((target + step) / 60) * 60;
+        var direction = button.hasAttribute('data-deck-next') ? 1 : -1;
+        target = Math.round((target + direction * step) / step) * step;
       });
     });
 
     deckCards.forEach(function (card, index) {
       card.addEventListener('focus', function () {
-        target = Math.round(-index * 60);
+        target = Math.round(-index * step);
       });
     });
 
@@ -440,7 +503,7 @@
     var endDrag = function () {
       if (!deckDragging) return;
       deckDragging = false;
-      target = Math.round(target / 60) * 60;
+      target = Math.round(target / step) * step;
     };
     deck.addEventListener('pointerup', endDrag);
     deck.addEventListener('pointercancel', endDrag);

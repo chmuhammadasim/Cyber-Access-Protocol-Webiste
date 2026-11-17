@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8">
+  <meta name="robots" content="noindex"><title>Metrics</title></head>
+<body>
+<pre id="out">PENDING</pre>
+<iframe id="frame" src="../campaign.html#chapter-7" style="width:1440px;height:900px"></iframe>
+<script>
+  document.getElementById('frame').onload = function () {
+    setTimeout(function () {
+      var f = document.getElementById('frame');
+      var w = f.contentWindow;
+      var d = f.contentDocument;
+      var target = d.getElementById('chapter-7');
+      var nav = d.querySelector('.chapter-nav');
+      var html = d.documentElement;
+      var rect = target.getBoundingClientRect();
+      document.getElementById('out').textContent = JSON.stringify({
+        scrollY: w.scrollY,
+        targetOffsetTop: target.offsetTop,
+        targetRectTop: rect.top,
+        targetHeight: rect.height,
+        chapterNavHeight: nav ? nav.getBoundingClientRect().height : null,
+        scrollPaddingTop: getComputedStyle(html).scrollPaddingTop,
+        scrollMarginTop: getComputedStyle(target).scrollMarginTop,
+        bodyScrollHeight: d.body.scrollHeight,
+        active: (d.querySelector('.chapter-nav a.is-active') || {}).textContent
+      });
+    }, 3500);
+  };
+</script>
+</body>
+</html>

@@ -1,29 +1,31 @@
 # Cyber Access Protocol
 
-> A 2D cyber-security action platformer about a junior operator restoring a locked-down technology tower and uncovering the adversary attacking its records.
+> A 2D cyber-security action platformer about a junior operator restoring a locked-down technology tower, then rebuilding the living operations campus behind it.
 
-Cyber Access Protocol is a single-player, offline game set in Asterion Tower. It spans
-50 levels and 40 missions across five chapters, from the tower lobby to the city core.
-The final chapter, The Last Signal, adds nine security disciplines, an Evidence
-Workbench, ten new bosses and three endings.
+Cyber Access Protocol is a single-player, offline game set in Asterion Tower and the
+AEGIS Operations Campus. It spans 70 levels and 60 missions across seven chapters, from
+the tower lobby to the living system. The final chapter adds ten operational domains,
+a configuration workbench, a persistent character sheet, sixteen dialogue conversations,
+practical certification and three Level 70 operating models.
 
 ## Main pages
 
-- [Overview](index.html): What Cyber Access Protocol is, the incident, design pillars and key facts.
-- [Campaign](campaign.html): All 50 levels across five chapters, with a screenshot for every level.
-- [Gameplay](gameplay.html): The core loop, abilities, mission structure, threats, bosses, controls and accessibility.
-- [Gallery](gallery.html): 64 screens from the game, filterable by campaign, bosses, interface and endings.
-- [Field Manual](field-manual.html): The Last Signal's nine disciplines, Evidence Workbench, ten bosses and three endings.
+- [Overview](index.html): What Cyber Access Protocol is, the incident, design pillars, V7 systems and key facts.
+- [Campaign](campaign.html): All 70 levels across seven chapters, with an image for every level.
+- [Gameplay](gameplay.html): The core loop, abilities, V7 workbench, character sheet, dialogue, mission structure, threats, bosses, controls and accessibility.
+- [Gallery](gallery.html): 95 screens from the game, filterable by campaign, chapter, bosses, interface, dialogue and endings.
+- [Field Manual](field-manual.html): 28 disciplines across three campaigns, the V7 workbench, consequences, six endings and the full boss roster.
 - [The Journey](changelog.html): How the campaign grew chapter by chapter.
 - [Press Kit](press.html): Fact sheet, approved copy, cast, screenshots, logo and current status.
 
 ## Key facts
 
-- 50 levels, 40 missions, five chapters.
+- 70 levels, 60 missions, seven chapters.
+- 28 specialist disciplines; 20 new bosses in Chapters VI–VII.
+- Six endings across two finals: Level 50 and Level 70.
 - Single-player and offline; no account, leaderboard or online requirement.
 - Windows PC; more platforms to be announced.
 - English and Urdu, with full right-to-left support.
-- Three endings chosen at the Level 50 command lock.
 - Fictional setting. The game never touches real systems, credentials or networks.
 
 ## Contact

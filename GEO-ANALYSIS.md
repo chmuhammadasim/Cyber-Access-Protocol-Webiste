@@ -1,6 +1,6 @@
 # GEO / AI Search Readiness — Cyber Access Protocol
 
-**Audited:** 2026-11-16
+**Audited:** 2026-11-17
 **Scope:** `website/` (local static site, no production domain assigned)
 **Method:** Source review + static HTML extraction + headless-browser interaction tests.
 Ai-search visibility itself is **not measured**: the site is not deployed and no
@@ -8,13 +8,13 @@ DataForSEO / SE Ranking data is available. Scores below assess readiness, not ra
 
 ---
 
-## 1. GEO Readiness Score: 78 / 100
+## 1. GEO Readiness Score: 79 / 100
 
 | Area | Weight | Score | Notes |
 |---|---:|---:|---|
 | Citability | 25% | 21 | Definition front-loaded in the hero; question-led FAQ blocks on Overview, Campaign, Gameplay, Field Manual and Press; specific player-facing numbers. No sourced third-party data. |
 | Structural readability | 20% | 18 | Clean H1→H2→H3 hierarchy, tables, lists, FAQ sections, short paragraphs. Campaign page is long but sectioned by chapter. |
-| Multi-modal | 15% | 13 | 100 images with alt text and captions, including screenshots of every level, plus an interactive 3D chapter deck. No video or audio preview yet. |
+| Multi-modal | 15% | 14 | 140+ images with alt text and captions, including screenshots or backdrops for every level, plus an interactive 3D chapter deck. No video or audio preview yet. |
 | Authority & brand | 20% | 8 | Visible update date and Organization schema, but no named creator/studio byline, no external profile links, and no Wikipedia / Reddit / YouTube / LinkedIn presence for the game. |
 | Technical accessibility | 20% | 18 | Static HTML; all marketing copy is in the raw document. AI-search crawlers allowed. `llms.txt` present. No canonical or sitemap because no domain exists. |
 
@@ -100,7 +100,7 @@ Self-contained passages already present:
 | Campaign FAQ | 30–50 words per answer | Answers level count, length, bosses and replay. |
 | Field Manual doctrines | ~45–60 words each | Self-contained explanations of each security discipline. |
 | Press long description | ~200 words | Complete overview with setting, structure and final chapter. |
-| Level cards | 1–2 sentences | Specific, named facts for all 50 levels. |
+| Level cards | 1–2 sentences | Specific, named facts for all 70 levels. |
 
 Opportunity: add one explicit 130–170-word "What is Cyber Access Protocol?" overview
 block on the homepage. The hero and FAQ cover the definition; a single longer block
@@ -177,7 +177,7 @@ Specific passages to improve next:
    inference.
 3. **Field Manual mission table**: already a strong citable table; keep it. Add a short
    caption above it: "The Last Signal has ten missions, Levels 41–50, each with its own
-   boss."
+   boss." The wider manual now also carries the 28-discipline set and six endings.
 4. **Gallery**: captions are now descriptive and chapter-labelled. Add a one-sentence
    intro per filter category if the gallery grows.
 5. **Journey**: each chapter entry has a date and content list; add one sentence about
@@ -189,8 +189,9 @@ Specific passages to improve next:
 
 - Static extraction: 8 pages, 0 broken local references, one `<h1>` per page, every
   `<img>` has `alt`, homepage JSON-LD parses.
-- Headless Edge: gallery filter 64→13, lightbox open/caption/next/close, Field Manual
-  tabs, mobile nav, chapter-nav, hero depth parallax, six-card 3D deck rotation and
-  card tilt all pass with 0 runtime errors.
+- Headless Edge: gallery filter 95→14, dialogue filter 3, lightbox open/caption/next/close,
+  Field Manual tabs, mobile nav, chapter-link navigation, hero depth parallax, eight-card
+  3D deck rotation, the holdable 3D system core and card tilt all pass with 0 runtime
+  errors. Reduced-motion mode reports `has3d=false` and no core animation.
 - Marketing pass: engine, build, QA, test-count, hash, save-schema and version language
   removed from visible copy.

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8">
+  <meta name="robots" content="noindex"><title>Motion check</title></head>
+<body>
+<pre id="out">PENDING</pre>
+<iframe id="frame" src="../index.html" style="width:1440px;height:900px"></iframe>
+<script>
+  document.getElementById('frame').onload = function () {
+    setTimeout(function () {
+      var f = document.getElementById('frame');
+      var w = f.contentWindow;
+      var d = f.contentDocument;
+      var core = d.querySelector('.core');
+      var frameMain = d.querySelector('.hero-frame--main');
+      document.getElementById('out').textContent = JSON.stringify({
+        reduced: w.matchMedia('(prefers-reduced-motion: reduce)').matches,
+        has3d: d.documentElement.classList.contains('has-3d'),
+        coreAnimation: core ? w.getComputedStyle(core).animationName : null,
+        corePlayState: core ? w.getComputedStyle(core).animationPlayState : null,
+        frameTransform: frameMain ? w.getComputedStyle(frameMain).transform : null
+      });
+    }, 900);
+  };
+</script>
+</body>
+</html>

@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
+  <meta name="robots" content="noindex">
   <title>Site self-test</title>
 </head>
 <body>
@@ -13,6 +14,7 @@
   <iframe id="frame3" src="../index.html" style="width:1440px;height:1000px"></iframe>
   <pre id="result4">PENDING</pre>
   <iframe id="frame4" src="../campaign.html" style="width:1440px;height:1000px"></iframe>
+  <pre id="result5">PENDING</pre>
   <script>
     var galleryResult = document.getElementById('result');
     var manualResult = document.getElementById('result2');
@@ -39,6 +41,13 @@
         ).length;
         var countText = d.querySelector('.gallery-count b').textContent;
 
+        d.querySelector('.filter-btn[data-filter="dialogue"]').click();
+        var dialogue = Array.prototype.filter.call(
+          d.querySelectorAll('.shot'), function (shot) { return !shot.hidden; }
+        ).length;
+        var dialogueCount = d.querySelector('.gallery-count b').textContent;
+
+        d.querySelector('.filter-btn[data-filter="all"]').click();
         d.querySelector('.shot:not([hidden])').click();
         var dialogOpen = d.getElementById('lightbox').open;
         var dialogTitle = d.querySelector('.lightbox__caption b').textContent;
@@ -61,6 +70,8 @@
           initial: initial,
           bosses: bosses,
           countText: countText,
+          dialogue: dialogue,
+          dialogueCount: dialogueCount,
           dialogOpen: dialogOpen,
           dialogTitle: dialogTitle,
           counter: counter,
@@ -142,6 +153,19 @@
         }
         var fine = frame.contentWindow.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
+        var coreStage = d.querySelector('.core-stage');
+        var coreToggle = d.querySelector('.core-toggle');
+        var coreHeld = false;
+        var coreResumed = false;
+        if (coreStage && coreToggle) {
+          coreToggle.click();
+          coreHeld = coreStage.classList.contains('is-held') &&
+            coreToggle.getAttribute('aria-pressed') === 'true';
+          coreToggle.click();
+          coreResumed = !coreStage.classList.contains('is-held') &&
+            coreToggle.getAttribute('aria-pressed') === 'false';
+        }
+
         setTimeout(function () {
           var after = ring ? ring.style.getPropertyValue('--deck-rot') : null;
           var faces = d.querySelectorAll('.deck-card').length;
@@ -151,12 +175,15 @@
             deckCards: faces,
             deckBefore: before,
             deckAfter: after,
+            deckStep: ring ? ring.style.getPropertyValue('--deck-step') : null,
             deckMoved: before !== after,
+            coreHeld: coreHeld,
+            coreResumed: coreResumed,
             finePointer: fine,
             heroParallax: hero ? hero.style.getPropertyValue('--hx') : null,
             errors: errors
           });
-        }, 900);
+        }, 2200);
       } catch (error) {
         homeResult.textContent = 'ERROR ' + error.stack;
       }
@@ -169,8 +196,9 @@
         var frame = document.getElementById('frame4');
         var w = frame.contentWindow;
         var d = frame.contentDocument;
-        var target = d.getElementById('chapter-5');
-        w.scrollTo({ top: target.offsetTop, left: 0, behavior: 'instant' });
+        var target = d.getElementById('chapter-7');
+        var chapterLink = d.querySelector('.chapter-nav a[href="#chapter-7"]');
+        if (chapterLink) chapterLink.click();
         var card = d.querySelector('.level-card');
         if (card) {
           var cardRect = card.getBoundingClientRect();
@@ -185,18 +213,47 @@
           var active = d.querySelector('.chapter-nav a.is-active');
           document.getElementById('result4').textContent = JSON.stringify({
             scrollY: w.scrollY,
-            chapterTop: target.offsetTop,
+            chapterTop: target.getBoundingClientRect().top + w.scrollY,
+            chapterViewportTop: target.getBoundingClientRect().top,
             active: active ? active.textContent.trim() : null,
             tilt: card ? card.style.transform : null,
             errors: errors
           });
-        }, 700);
+        }, 2200);
       } catch (error) {
         document.getElementById('result4').textContent = 'ERROR ' + error.stack;
       }
     }
 
     document.getElementById('frame4').onload = runCampaign;
+
+    setTimeout(function () {
+      var frames = [
+        ['home', document.getElementById('frame3')],
+        ['gallery', document.getElementById('frame')],
+        ['manual', document.getElementById('frame2')],
+        ['campaign', document.getElementById('frame4')]
+      ];
+      frames.forEach(function (entry) {
+        entry[1].style.width = '390px';
+        entry[1].style.height = '844px';
+      });
+      setTimeout(function () {
+        var report = {};
+        frames.forEach(function (entry) {
+          var d = entry[1].contentDocument;
+          var overflow = d.documentElement.scrollWidth - d.documentElement.clientWidth;
+          report[entry[0]] = {
+            clientWidth: d.documentElement.clientWidth,
+            scrollWidth: d.documentElement.scrollWidth,
+            overflow: overflow
+          };
+          entry[1].style.width = '1440px';
+          entry[1].style.height = '1000px';
+        });
+        document.getElementById('result5').textContent = JSON.stringify(report);
+      }, 1400);
+    }, 9000);
   </script>
 </body>
 </html>

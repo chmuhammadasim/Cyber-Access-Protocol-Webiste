@@ -47,6 +47,10 @@
   transform: translate3d(calc(var(--hx, 0) * 9px), calc(var(--hy, 0) * 7px), 0) scale(1.04);
   transition: transform 400ms cubic-bezier(0.2, 0.7, 0.2, 1);
 }
+.has-3d .page-hero__content {
+  transform: translate3d(calc(var(--hx, 0) * 5px), calc(var(--hy, 0) * 3px), 36px);
+  transition: transform 340ms ease-out;
+}
 
 /* --- Tilt targets -------------------------------------------------------- */
 .has-3d .tilt-target {
@@ -145,7 +149,7 @@
   background: linear-gradient(165deg, rgba(11, 24, 40, 0.98), rgba(5, 11, 20, 0.99));
   color: var(--text);
   text-decoration: none;
-  transform: rotateY(calc(var(--i) * 60deg)) translateZ(300px);
+  transform: rotateY(calc(var(--i) * var(--deck-step, 60deg))) translateZ(var(--deck-radius, 300px));
   backface-visibility: hidden;
   opacity: var(--card-opacity, 0.7);
   box-shadow: 0 30px 70px rgba(0, 0, 0, 0.55), 0 0 34px rgba(0, 0, 0, 0.4);
@@ -273,7 +277,7 @@
 
 @media (max-width: 1080px) {
   .deck { transform: translateY(-16px) scale(0.9) rotateX(-4deg) rotateY(var(--deck-rot, 0deg)); }
-  .deck-card { transform: rotateY(calc(var(--i) * 60deg)) translateZ(270px); }
+  .deck-card { transform: rotateY(calc(var(--i) * var(--deck-step, 60deg))) translateZ(var(--deck-radius-sm, 270px)); }
   .deck-stage { height: 560px; }
 }
 
@@ -312,6 +316,65 @@
   .hero__sigil { display: none; }
 }
 
+/* --- Hero depth frames --------------------------------------------------- */
+.has-3d .hero__stack { transform-style: preserve-3d; perspective: 1100px; }
+.has-3d .hero-frame--main {
+  transform:
+    translate3d(calc(var(--hx, 0) * 10px), calc(var(--hy, 0) * 6px), 0)
+    rotateY(calc(-5deg + var(--hx, 0) * 5deg))
+    rotateX(calc(2deg - var(--hy, 0) * 4deg));
+  transition: transform 300ms ease-out;
+}
+.has-3d .hero-frame--pip {
+  transform:
+    translate3d(calc(var(--hx, 0) * -7px), calc(var(--hy, 0) * -4px), 48px)
+    rotateY(calc(-3deg + var(--hx, 0) * 7deg));
+  transition: transform 340ms ease-out;
+}
+.has-3d .hero-frame--pip2 {
+  transform:
+    translate3d(calc(var(--hx, 0) * -10px), calc(var(--hy, 0) * -5px), 72px)
+    rotateY(calc(4deg + var(--hx, 0) * 6deg));
+  transition: transform 380ms ease-out;
+}
+
+/* --- 3D reveal ----------------------------------------------------------- */
+.js .reveal {
+  transform: perspective(1000px) translateY(20px) rotateX(2deg);
+  transform-origin: 50% 100%;
+}
+.js .reveal.is-visible { transform: none; }
+
+/* --- Lightbox depth entry ------------------------------------------------ */
+.lightbox[open] {
+  animation: lightbox-depth-in 300ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  transform-origin: 50% 50%;
+}
+@keyframes lightbox-depth-in {
+  from { opacity: 0; transform: perspective(1000px) translateY(14px) rotateX(3deg) scale(0.97); }
+  to { opacity: 1; transform: none; }
+}
+
+/* --- Cross-document depth transition ------------------------------------ */
+@view-transition { navigation: auto; }
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(root) {
+    animation: page-depth-out 220ms ease-in both;
+    transform-origin: 50% 50%;
+  }
+  ::view-transition-new(root) {
+    animation: page-depth-in 300ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+    transform-origin: 50% 50%;
+  }
+}
+@keyframes page-depth-out {
+  to { opacity: 0; transform: perspective(1100px) rotateY(-2deg) scale(0.985); }
+}
+@keyframes page-depth-in {
+  from { opacity: 0; transform: perspective(1100px) translateY(10px) rotateY(2deg) scale(0.99); }
+  to { opacity: 1; transform: none; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .hero__sigil { animation: none; }
   .deck-glow { animation: none; }
@@ -319,6 +382,12 @@
   .has-3d .hero__content,
   .has-3d .hero__hud,
   .has-3d .page-hero__bg img,
+  .has-3d .page-hero__content,
+  .has-3d .hero-frame--main,
+  .has-3d .hero-frame--pip,
+  .has-3d .hero-frame--pip2,
   .has-3d .tilt-target { transform: none !important; }
   .has-3d .tilt-target .tilt-glare { display: none; }
+  .lightbox[open] { animation: none; }
+  .core { animation: none; }
 }

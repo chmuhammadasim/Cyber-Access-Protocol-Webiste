@@ -145,6 +145,72 @@ foreach ($plate in $plates) {
     Copy-Item (Join-Path $repo $plate.s) (Join-Path $outDir $plate.n) -Force
 }
 
+# --- Levels 51–70: shipped room backdrops (WebP, copied without re-encoding) --
+$v6v7 = @{
+    51 = 'level_51_edge_of_trust'
+    52 = 'level_52_the_living_grid'
+    53 = 'level_53_signal_divide'
+    54 = 'level_54_orbit_of_silence'
+    55 = 'level_55_privacy_protocol'
+    56 = 'level_56_sovereign_lines'
+    57 = 'level_57_architecture_of_trust'
+    58 = 'level_58_signal_in_the_crowd'
+    59 = 'level_59_convergence'
+    60 = 'level_60_the_open_network'
+    61 = 'level_61_workstation_forge'
+    62 = 'level_62_the_network_forge'
+    63 = 'level_63_identity_in_motion'
+    64 = 'level_64_cloud_guardrails'
+    65 = 'level_65_the_build_line'
+    66 = 'level_66_the_signal_workshop'
+    67 = 'level_67_incident_in_motion'
+    68 = 'level_68_restore_the_world'
+    69 = 'level_69_the_human_ai_boundary'
+    70 = 'level_70_the_living_system'
+}
+foreach ($n in ($v6v7.Keys | Sort-Object)) {
+    $slug = $v6v7[$n]
+    Copy-Item (Join-Path $repo "assets\art\rooms\$slug.webp") `
+        (Join-Path $outDir ("level-{0:D2}.webp" -f $n)) -Force
+}
+
+# --- Chapter VI–VII page plates (clean backdrops) --------------------------
+$platesV7 = @(
+    @{ s = 'assets/art/rooms/level_51_edge_of_trust.webp';        n = 'plate-51.webp' },
+    @{ s = 'assets/art/rooms/level_55_privacy_protocol.webp';     n = 'plate-55.webp' },
+    @{ s = 'assets/art/rooms/level_59_convergence.webp';          n = 'plate-59.webp' },
+    @{ s = 'assets/art/rooms/level_60_the_open_network.webp';     n = 'plate-60.webp' },
+    @{ s = 'assets/art/rooms/level_61_workstation_forge.webp';    n = 'plate-61.webp' },
+    @{ s = 'assets/art/rooms/level_65_the_build_line.webp';        n = 'plate-65.webp' },
+    @{ s = 'assets/art/rooms/level_67_incident_in_motion.webp';    n = 'plate-67.webp' },
+    @{ s = 'assets/art/rooms/level_70_the_living_system.webp';     n = 'plate-70.webp' }
+)
+foreach ($plate in $platesV7) {
+    Copy-Item (Join-Path $repo $plate.s) (Join-Path $outDir $plate.n) -Force
+}
+
+# --- V6 / V7 interface, dialogue and practical captures -------------------
+$v7ui = @(
+    @{ s = 'production/qa/evidence/v7-2026-11-17/v7-mission-61.png';              n = 'v7-mission-61.jpg';           q = 92 },
+    @{ s = 'production/qa/evidence/v7-2026-11-17/v7-zone-61.png';                 n = 'v7-zone-61.jpg';              q = 92 },
+    @{ s = 'production/qa/evidence/v7-2026-11-17/v7-terminal-61.png';             n = 'v7-terminal-61.jpg';          q = 92 },
+    @{ s = 'production/qa/evidence/v7-2026-11-17/v7-boss-61.png';                 n = 'v7-boss-61.jpg';              q = 92 },
+    @{ s = 'production/qa/evidence/v7-2026-11-17/v7-debrief-70.png';              n = 'v7-debrief-70.jpg';           q = 92 },
+    @{ s = 'production/qa/evidence/v7-2026-11-17/v7-dialogue-61.png';             n = 'v7-dialogue-61.jpg';          q = 92 },
+    @{ s = 'production/qa/evidence/v7-2026-11-17/v7-dialogue-61-choices.png';     n = 'v7-dialogue-61-choices.jpg';  q = 92 },
+    @{ s = 'production/qa/evidence/v7-2026-11-17/v7-dialogue-61-ur.png';          n = 'v7-dialogue-61-ur.jpg';       q = 92 },
+    @{ s = 'production/qa/evidence/v7-2026-11-17/v7-practical-terminal-31.png';   n = 'v7-practical-terminal-31.jpg'; q = 92 },
+    @{ s = 'production/qa/evidence/v7-2026-11-17/v7-practical-debrief-31.png';    n = 'v7-practical-debrief-31.jpg'; q = 92 },
+    @{ s = 'production/qa/evidence/v7-2026-11-17/v7-terminal-62-canvas.png';      n = 'v7-terminal-62-canvas.jpg';   q = 92 },
+    @{ s = 'production/qa/evidence/v7-2026-11-17/v7-terminal-67-timeline.png';    n = 'v7-terminal-67-timeline.jpg'; q = 92 },
+    @{ s = 'production/qa/evidence/v7-2026-11-17/v7-terminal-67-skin.png';        n = 'v7-terminal-67-skin.jpg';     q = 92 },
+    @{ s = 'production/qa/evidence/website-2026-11-17/archive-v7.png';             n = 'archive-v7.jpg';              q = 92 },
+    @{ s = 'production/qa/evidence/v6-2026-11-17/v6-debrief-C.png';               n = 'v6-debrief-C.jpg';            q = 92 }
+)
+foreach ($item in $v7ui) {
+    Convert-Capture -Source $item.s -Name $item.n -Quality $item.q
+}
+
 $count = (Get-ChildItem $outDir -File).Count
 $size = [Math]::Round((Get-ChildItem $outDir -File | Measure-Object Length -Sum).Sum / 1MB, 1)
 Write-Host "Wrote $count images to website/assets/img ($size MB)."
